@@ -1,13 +1,14 @@
 const path = require('path')
+const fs = require('fs')
 class News{
     getAll(req,res){
-        return res.json([
-            {image:"../image/news/news-1.jpg",title:"News-1",text:"this news is a test to see all the news you need to follow the link below'"},
-            {image:"../image/news/news-1.jpg",title:"News-1",text:"this news is a test to see all the news you need to follow the link below'"},
-            {image:"../image/news/news-1.jpg",title:"News-1",text:"this news is a test to see all the news you need to follow the link below'"},
-            {image:"../image/news/news-1.jpg",title:"News-1",text:"this news is a test to see all the news you need to follow the link below'"},
-            {image:"../image/news/news-1.jpg",title:"News-1",text:"this news is a test to see all the news you need to follow the link below'"}
-        ])
+        fs.readFile('./news.json','utf8',(err,data)=>{
+            if(err) throw err
+            return res.send(data)
+        })
+    }
+    addNews(req,res){
+        fs.writeFile('./news.json',req.body.data,(err)=>{})
     }
 }
 

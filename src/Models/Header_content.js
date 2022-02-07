@@ -10,7 +10,7 @@ const HeaderContent = () => {
                     </div>
                     <nav>
                         <div className="header__btn-menu">
-                            <span className="icon-bars"></span>
+                            <span clas  sName="icon-bars"></span>
                         </div>
                         <ul className="topmenu">
                             <li><a href="index.html" className="active">Who we are <span

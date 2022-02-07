@@ -1,11 +1,24 @@
 table {
   td {
     vertical-align: middle;
+    span{
+      max-width: 310px;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   }
+
   th{}
   background: white;
 }
-
+.title{
+  overflow-x:auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .custom-table__action-btn {
   cursor: pointer;
   border: 1px solid #eee;

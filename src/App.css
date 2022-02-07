@@ -111,6 +111,8 @@
 .news_panel div{
     display: flex;
     justify-content: center;
+    overflow:scroll;
+    max-height: 100%;
 }
 .news_table {
     width: 97%;

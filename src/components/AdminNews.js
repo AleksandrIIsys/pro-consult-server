@@ -1,8 +1,11 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {useDropzone} from "react-dropzone";
 import EditableTable from "./EditableTable";
+import {Context} from "../index";
+import {observer} from "mobx-react-lite";
 
-const AdminNews = () => {
+const AdminNews = observer(() => {
+    const {news} = useContext(Context)
     const [haveIMG,setHAVE] = useState(false);
     const [url,setURL] = useState('gray');
     const onDrop = useCallback(async acceptedFiles => {
@@ -17,6 +20,7 @@ const AdminNews = () => {
             setURL('/img/' + test.url)
         })
     }, [])
+    console.log("!")
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
     const columns = [
@@ -27,9 +31,6 @@ const AdminNews = () => {
         { field: "date", fieldName: 'Date' },
     ];
 
-    const data = [
-        {id: "1", image: "/", title:"два",text:'text',date:'aboba'}
-    ];
     return (
         <div className={"admin_news"}>
             <div className={"top_panel"}>
@@ -37,7 +38,7 @@ const AdminNews = () => {
                     <div className={"admin_create_news"}>
                         <div className={"admin_create_news-ta"}>
                             <input type={"text"} className={"text_title_send"}/>
-                            <textarea ></textarea>
+                            <textarea className={"text_area_news"}></textarea>
                         </div>
                         <div style={{cursor:'pointer'}} {...getRootProps()}>
                             <input {...getInputProps()} />
@@ -51,7 +52,7 @@ const AdminNews = () => {
                         </div>
                     </div>
                 </div>
-                <input type={"button"} value={"ok"} onClick={async ()=>{
+                <input type={"button"} value={"ok"}  onClick={async ()=>{
                     // let myFormData = new FormData();
                     // let file = document.querySelector("#file_send")
                     // myFormData.append("picture",file.files[0]);
@@ -59,27 +60,25 @@ const AdminNews = () => {
                     //     {method:"POST",
                     //         body:myFormData,
                     //     })
-
+                    const fd = new FormData();
+                    let d = news.getNews()
+                    d.push( {id:String(news.getNews().length+1),image:url,title:document.querySelector(".text_title_send").value,text:document.querySelector(".text_area_news").value,date:'aboba'})
+                            // fd.append('data',JSON.stringify(d))
+                            // await fetch('/api/news/',
+                            //     {
+                            //         method: "POST",
+                            //         body: fd
+                            //     })
+                    console.log(d);
                 }}/>
             </div>
         <div className={"news_panel"}>
-            <EditableTable rows={data} columns={columns} actions></EditableTable>
-            {/*<div>*/}
-            {/*<table className={"news_table"}>*/}
-            {/*    <thead>*/}
-            {/*        <th>Картинка</th>*/}
-            {/*        <th>Название</th>*/}
-            {/*        <th>Содержание</th>*/}
-            {/*        <th>Дата</th>*/}
-            {/*    </thead>*/}
-            {/*    <tbody>*/}
-
-            {/*    </tbody>*/}
-            {/*</table>*/}
-            {/*</div>*/}
+            <div>
+                <EditableTable rows={news.getNews()} columns={columns} actions/>
+            </div>
         </div>
         </div>
     );
-};
+});
 
 export default AdminNews;

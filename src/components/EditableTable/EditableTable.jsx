@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import { Form, Table } from "react-bootstrap";
 import { PencilFill, Save, Trash, XSquare } from 'react-bootstrap-icons';
 import './EditableTable.styles.scss';
+import {observer} from "mobx-react-lite";
+import {Context} from "../../index";
 
-const EditableTable = ({ columns, rows, actions }) => {
+const EditableTable = observer(({ columns, rows, actions }) => {
+  const {news} = useContext(Context);
   const [isEditMode, setIsEditMode] = useState(false);
   const [rowIDToEdit, setRowIDToEdit] = useState(undefined);
-  const [rowsState, setRowsState] = useState(rows);
+  const [rowsState, setRowsState] = useState(news.getNews());
   const [editedRow, setEditedRow] = useState();
-
   const handleEdit = (rowID) => {
     setIsEditMode(true);
     setEditedRow(undefined);
@@ -20,7 +22,7 @@ const EditableTable = ({ columns, rows, actions }) => {
       return row.id !== rowID ? row : null
     });
 
-    setRowsState(newData);
+    news.setNews(newData);
   }
 
   const handleOnChangeField = (e, rowID) => {
@@ -41,18 +43,16 @@ const EditableTable = ({ columns, rows, actions }) => {
     setTimeout(() => {
       setIsEditMode(false);
 
-      const newData = rowsState.map(row => {
+      const newData = (rowsState.map(row => {
         if (row.id === editedRow.id) {
           if (editedRow.image) row.image = editedRow.image;
           if (editedRow.title) row.title = editedRow.title;
           if (editedRow.text) row.text = editedRow.text;
           if (editedRow.date) row.date = editedRow.date;
         }
-
         return row;
-      })
-
-      setRowsState(newData);
+      }))
+      news.setNews(newData);
       setEditedRow(undefined)
     }, 1000)
   }
@@ -81,7 +81,7 @@ const EditableTable = ({ columns, rows, actions }) => {
                 name='image'
                 onChange={ (e) => handleOnChangeField(e, row.id) }
               />
-              : row.image
+                : <span>{row.image}</span>
             }
           </td>
           <td>
@@ -93,7 +93,7 @@ const EditableTable = ({ columns, rows, actions }) => {
                 name='title'
                 onChange={ (e) => handleOnChangeField(e, row.id) }
               />
-              : row.title
+                : <span className={"title"}>{row.title}</span>
             }
           </td>
           <td>
@@ -105,7 +105,7 @@ const EditableTable = ({ columns, rows, actions }) => {
                     name='text'
                     onChange={ (e) => handleOnChangeField(e, row.id) }
                 />
-              : row.text
+                : <span>{row.text}</span>
             }
           </td>
           <td>
@@ -146,6 +146,6 @@ const EditableTable = ({ columns, rows, actions }) => {
       </tbody>
     </Table>
   );
-};
+});
 
 export default EditableTable;

@@ -1,20 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Slider from "react-slick";
 import NewsElement from "./NewsElement";
-import {observe} from "mobx";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
 const MainNews = observer(() => {
     const {news} = useContext(Context)
-    console.log(news.getNews())
-    useEffect(() => {
-        let isMounted = true;
-        fetch('/api/news/').
-        then((response)=>{
-            return response.json()
-        }).then((n)=>news.setNews(n))
-        return () => { isMounted = false };
-    }, []);
     return (
         <div className="news">
             <div className="container">
