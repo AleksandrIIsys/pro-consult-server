@@ -11,14 +11,21 @@ const AdminNews = observer(() => {
     const onDrop = useCallback(async acceptedFiles => {
         setHAVE(true);
         let myFormData = new FormData();
-        myFormData.append("picture", acceptedFiles[0]);
-        const f = await fetch('/api/admin/picture_for', {
-            method: "POST",
-            body: myFormData,
-        })
-        f.json().then((test) => {
-            setURL('/img/' + test.url)
-        })
+        const filereader = new FileReader()
+        console.log(filereader);
+        filereader.onload = file=>{
+            setURL(file.target.result)
+        }
+        filereader.readAsDataURL(acceptedFiles[0])
+
+        // myFormData.append("picture", acceptedFiles[0]);
+        // const f = await fetch('/api/admin/picture_for', {
+        //     method: "POST",
+        //     body: myFormData,
+        // })
+        // f.json().then((test) => {
+        //     setURL('/img/' + test.url)
+        // })
     }, [])
     console.log("!")
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
@@ -61,15 +68,14 @@ const AdminNews = observer(() => {
                     //         body:myFormData,
                     //     })
                     const fd = new FormData();
-                    let d = news.getNews()
-                    d.push( {id:String(news.getNews().length+1),image:url,title:document.querySelector(".text_title_send").value,text:document.querySelector(".text_area_news").value,date:'aboba'})
-                            // fd.append('data',JSON.stringify(d))
-                            // await fetch('/api/news/',
-                            //     {
-                            //         method: "POST",
-                            //         body: fd
-                            //     })
-                    console.log(d);
+                    const obj = {id:String(news.getNews().length+1),image:url,title:document.querySelector(".text_title_send").value,text:document.querySelector(".text_area_news").value,date:'aboba'}
+                    news.AddNews(obj)
+                    fd.append('data',JSON.stringify(obj))
+                    await fetch('/api/news/',
+                        {
+                                method: "POST",
+                                body: fd
+                            })
                 }}/>
             </div>
         <div className={"news_panel"}>

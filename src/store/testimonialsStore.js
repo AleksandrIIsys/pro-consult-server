@@ -6,7 +6,6 @@ export default class TestimonialsStore{
         makeAutoObservable(this)
     }
     setTestimonials(testimonials){
-        console.log(testimonials)
         this._testimonials = testimonials;
     }
     getTestimonials(){

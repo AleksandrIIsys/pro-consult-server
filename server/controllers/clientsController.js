@@ -1,15 +1,10 @@
 const path = require('path')
+const {ClientsElems} = require("../models/models");
 class Clients{
     getAll(req,res){
-        return res.json([
-            {image:"../image/clients/clients-1.jpg"},
-            {image:"../image/clients/clients-3.jpg"},
-            {image:"../image/clients/clients-4.jpg"},
-            {image:"../image/clients/clients-5.jpg"},
-            {image:"../image/clients/clients-6.jpg"},
-            {image:"../image/clients/clients-2.jpg"},
-            {image:"../image/clients/clients-1.jpg"}
-        ])
+        ClientsElems.find({},function (err,docs){
+            return res.send(docs)
+        })
     }
 }
 

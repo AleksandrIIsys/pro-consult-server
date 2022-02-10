@@ -1,11 +1,10 @@
-import {makeAutoObservable, observable, configure, action} from "mobx";
+import {makeAutoObservable, observable, action} from "mobx";
 export default class NewsStore{
-    _news = []
     constructor() {
+        this._news = []
         makeAutoObservable(this,{
             _news:observable,
             EditNews:action.bound
-
         })
     }
     setNews(news){
@@ -13,6 +12,9 @@ export default class NewsStore{
         for (const n of news) {
             this._news.push(n)
         }
+    }
+    AddNews(news){
+        this._news.push(news)
     }
     EditNews(elem){
         this._news[elem.id-1] = elem

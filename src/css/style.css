@@ -338,6 +338,7 @@ nav li:hover > .submenu {
     float: left;
     position: relative;
     height: 500px;
+    width: 100%;
     border: 1px solid #ccc;
 }
 
@@ -346,6 +347,7 @@ nav li:hover > .submenu {
     top: 10px;
     right: 20px;
     color: #fff;
+
     font-style: italic;
     font-size: 32px;
     font-weight: bold;

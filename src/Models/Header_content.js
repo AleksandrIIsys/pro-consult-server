@@ -1,16 +1,18 @@
 import React from 'react';
-
+import {NavLink} from "react-router-dom";
 const HeaderContent = () => {
     return (
         <div className="header__content">
             <div className="container">
                 <div className="header__inner">
                     <div className="header__content-logo">
-                        <img src="../image/logo.png" alt=""/>
+                        <NavLink to={'/'}>
+                            <img src="../image/logo.png" alt=""/>
+                        </NavLink>
                     </div>
                     <nav>
                         <div className="header__btn-menu">
-                            <span clas  sName="icon-bars"></span>
+                            <span className="icon-bars"></span>
                         </div>
                         <ul className="topmenu">
                             <li><a href="index.html" className="active">Who we are <span
@@ -63,7 +65,7 @@ const HeaderContent = () => {
                                     </li>
                                 </ul>
                             </li>
-                            <li><a href="">News<span className="fa fa-angle-down"></span></a></li>
+                            <li><a href="/news">News<span className="fa fa-angle-down"></span></a></li>
                             <li><a href="">Careers<span className="fa fa-angle-down"></span></a></li>
                             <li><a href="">contact <span className="fa fa-angle-down"></span></a></li>
                         </ul>
