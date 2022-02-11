@@ -2,11 +2,11 @@ import HeaderTop from "./Header_top";
 import HeaderContent from "./Header_content";
 import React from 'react';
 
-const Header = () => {
+const Header = ({currentLocale,handleChangeLocale}) => {
     return (
         <div className={"header"}>
             {/*<HeaderTop></HeaderTop>*/}
-            <HeaderContent></HeaderContent>
+            <HeaderContent currentLocale={currentLocale} handleChangeLocale={handleChangeLocale}></HeaderContent>
         </div>
     );
 };

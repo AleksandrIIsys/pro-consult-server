@@ -16,8 +16,6 @@ const News =observer( (props) => {
     const {news} = useContext(Context)
     return (
         <div>
-            <Header/>
-            <MainSlider/>
             <Swiper
                 pagination={{
                     dynamicMainBullets: true,
@@ -32,7 +30,7 @@ const News =observer( (props) => {
             >
                 {
                     news.getNews().map(news_element =>
-                        <SwiperSlide style={{background:"gray"}}>
+                        <SwiperSlide >
                             <div className="container">
                                 <div className="imgNews"
                                      style={{display: "flex", flexDirection: "row", fontSize: "22px", backgroundColor: "#15337eed", padding: "50px"}}>

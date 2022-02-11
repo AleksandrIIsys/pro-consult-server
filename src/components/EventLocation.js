@@ -14,7 +14,7 @@ const EventLocation = () => (
                         center: [41.327289, 69.333528],
                         zoom: 16,
                     }}
-                    width={1000}
+                    width={900}
                     height={320}>
                     <Placemark geometry={[41.327289, 69.333528]}/>
                 </Map>

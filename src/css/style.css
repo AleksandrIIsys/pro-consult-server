@@ -254,6 +254,13 @@ nav a {
     position: relative;
 }
 
+.topmenu > li > div {
+    padding: 20px 25px;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: black;
+    font-weight: 600;
+}
 .topmenu > li > a {
     padding: 20px 25px;
     font-size: 18px;
@@ -261,15 +268,12 @@ nav a {
     color: black;
     font-weight: 600;
 }
-
 .topmenu li :hover {
     background-color:rgba(21, 51, 126, 0.1) ;
     /* border-bottom: 2px solid #15337eed; */
 }
 .topmenu li:active{
      border-bottom: 2px solid #15337eed;
-}
-.active {
 }
 
 .submenu a:hover {
@@ -380,8 +384,8 @@ nav li:hover > .submenu {
 .slider__title {
     text-align: left;
     width: 100%;
-    font-size: 54px;
-    line-height: 30px;
+    font-size: 44px;
+    line-height: 40px;
     font-weight: 600;
     margin: 55px 0;
 }
@@ -520,7 +524,7 @@ ul.breadcrumb li a:hover {
 
 .about__item {
     background-color: white;
-    height: 400px;
+    height: 450px;
     margin: 30px 0;
     color: #01447e;
     width: 31%;
@@ -553,7 +557,7 @@ ul.breadcrumb li a:hover {
     font-weight: 400;
     line-height: 24px;
     text-align: justify;
-
+    white-space: normal;
 }
 
 .about__btn {

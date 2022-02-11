@@ -4,14 +4,13 @@ import MainSlider from "../Models/MainSlider";
 import Footer from "../Models/Footer";
 import React from "react";
 import FooterTest from "../Models/FooterTest";
-function Home() {
+import {Outlet} from "react-router-dom";
+function Home({currentLocale,handleChangeLocale}) {
     return (
         <div>
-            <Header></Header>
-            <MainSlider></MainSlider>
-            <Main></Main>
-            {/*<Footer></Footer>*/}
-            <FooterTest></FooterTest>
+            <Header currentLocale={currentLocale} handleChangeLocale={handleChangeLocale}></Header>
+            <MainSlider currentLocale={currentLocale}></MainSlider>
+            <Outlet></Outlet>
         </div>
     );
 }

@@ -1,6 +1,12 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
-const HeaderContent = () => {
+import {LOCALES} from "../i18n/Locale";
+const HeaderContent = ({currentLocale,handleChangeLocale}) => {
+    const languages = [
+        { name: 'English', code: LOCALES.ENGLISH },
+        { name: 'Русский', code: LOCALES.RUSSIAN },
+        { name: 'Узбек', code: LOCALES.UZBEK },
+        ]
     return (
         <div className="header__content">
             <div className="container">
@@ -15,8 +21,8 @@ const HeaderContent = () => {
                             <span className="icon-bars"></span>
                         </div>
                         <ul className="topmenu">
-                            <li><a href="index.html" className="active">Who we are <span
-                                className="fa fa-angle-down"></span></a>
+                            <li><div className="active">Who we are<span
+                                className="fa fa-angle-down"></span></div>
                                 <ul className="submenu">
                                     <li><a href="about.html">About Us</a></li>
                                     <li><a href="">Governance</a></li>
@@ -27,7 +33,7 @@ const HeaderContent = () => {
                                     <li><a href="">References</a></li>
                                 </ul>
                             </li>
-                            <li><a href="" className="active">What we do<i className="bi bi-caret-right-fill"></i></a>
+                            <li><div>What we do<i className="bi bi-caret-right-fill"></i></div>
                                 <ul className="submenu">
                                     <li><a href="">Infrastructure</a>
                                         <ul className="submenu">
@@ -59,11 +65,7 @@ const HeaderContent = () => {
                                 </ul>
                             </li>
 
-                            <li><a href="">Where We work<span className="fa fa-angle-down"></span></a>
-                                <ul className="submenu">
-                                    <li><a href="">Location</a>
-                                    </li>
-                                </ul>
+                            <li><a href={"/where-we-work"}>Where We work<span className="fa fa-angle-down"></span></a>
                             </li>
                             <li><a href="/news">News<span className="fa fa-angle-down"></span></a></li>
                             <li><a href="">Careers<span className="fa fa-angle-down"></span></a></li>
@@ -74,11 +76,13 @@ const HeaderContent = () => {
 
             </div>
             <div className="lang-menu">
-                <select className={"selected-lang"}>
-                    <option>English</option>
-                    <option>Русский</option>
-                    <option>Узбек</option>
-                </select>
+                <select className={'selected-lang'} onChange={handleChangeLocale} value={currentLocale}>
+                {languages.map(({ name, code }) => (
+                    <option key={code} value={code}>
+                        {name}
+                    </option>
+                ))}
+            </select>
             </div>
 
 

@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import PartnersElement from "./PartnersElement";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
+import {FormattedMessage} from "react-intl";
 const MainPartners = observer(() => {
     const {partners} = useContext(Context);
     useEffect(()=>{
@@ -17,7 +18,7 @@ const MainPartners = observer(() => {
         <div className={"partners"}>
             <div>
                 <div className="partners__title">
-                    Our Partners
+                    <FormattedMessage id={"our_partners"}/>
                 </div>
                 <Slider className={"container"}  dots={true} infinite={true} speed={1000} slidesToScroll={1} arrows={true} slidesToShow={6}>
                     {partners.getPartners().map(prElem=>

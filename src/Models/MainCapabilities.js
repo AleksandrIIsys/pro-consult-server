@@ -1,73 +1,62 @@
 import React from 'react';
+import {FormattedMessage} from "react-intl";
 
 const MainCapabilities = () => {
     return (
         <div className="capabilities">
             <div className="container">
                 <div className="capabilities__title">
-                    Our capabilities
+                    <FormattedMessage id={"capabilities_title"}/>
                 </div>
                 <div className="capabilities__items">
                     <div className="capabilities__item">
                         <div className="capabilities__item__title">
-                            Plan & design
+                            <FormattedMessage id={"capabilities_item_title_plan"}/>
                         </div>
                         <img src="../image/capabilities/capabilities-1.jpg" alt="" className="capabilities__img"/>
 
                             <div className="capabilities__item__text">
-                                Our company provides services for the design and development stage of feasibility
-                                studies,
-                                including the development of feasibility studies, business plans and more
+                                <FormattedMessage id={"capabilities_item_text_plan"}/>
                             </div>
                     </div>
                     <div className="capabilities__item">
                         <div className="capabilities__item__title">
-                            Consulting
+                            <FormattedMessage id={"capabilities_item_title_consulting"}/>
                         </div>
                         <img src="../image/capabilities/capabilities-2.jpg" alt="" className="capabilities__img"/>
 
                             <div className="capabilities__item__text">
-                                We advise on the implementation of investment projects, from the development of a
-                                feasibility study to the signing of the act of commissioning
-                            </div>
+                                <FormattedMessage id={"capabilities_item_text_consulting"}/>                            </div>
                     </div>
                     <div className="capabilities__item">
                         <div className="capabilities__item__title">
-                            Procurement
+                            <FormattedMessage id={"capabilities_item_title_procurement"}/>
                         </div>
                         <img src="../image/capabilities/capabilities-3.jpg" alt="" className="capabilities__img"/>
 
                             <div className="capabilities__item__text">
-                                Our company provides services for the development of tender documents and universal
-                                provisions of the company for procurement procedures
-                            </div>
+                                <FormattedMessage id={"capabilities_item_text_procurement"}/>                            </div>
                     </div>
                     <div className="capabilities__item">
                         <div className="capabilities__item__title">
-                            project supervision
+                            <FormattedMessage id={"capabilities_item_title_project_supervision"}/>
                         </div>
                         <img src="../image/capabilities/capabilities-4.jpg" alt="" className="capabilities__img"/>
 
                             <div className="capabilities__item__text">
-                                We provide supervision of the project both during the construction period and for the
-                                entire
-                                period of the project
-                            </div>
+                                <FormattedMessage id={"capabilities_item_text_project_supervision"}/>                            </div>
                     </div>
                     <div className="capabilities__item">
                         <div className="capabilities__item__title">
-                            Education
+                            <FormattedMessage id={"capabilities_item_title_education"}/>
                         </div>
                         <img src="../image/capabilities/capabilities-5.jpg" alt="" className="capabilities__img"/>
 
                             <div className="capabilities__item__text">
-                                Our company provides quality training courses for engineers, recognized by leading
-                                companies
-                                and ministries
-                            </div>
+                                <FormattedMessage id={"capabilities_item_text_education"}/>                            </div>
                     </div>
                 </div>
-                <div className=" capabilities__item__btn"><a href="">Read more about our capabilities</a>
+                <div className=" capabilities__item__btn"><a href=""><FormattedMessage id={'read_more_capabilities'}/></a>
                 </div>
             </div>
         </div>

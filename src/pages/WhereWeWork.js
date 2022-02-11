@@ -1,15 +1,14 @@
 import React from 'react';
-import Header from "./Header";
-import MainSlider from "./MainSlider";
-import FooterTest from "./FooterTest";
-import OfficeLocation from "./OfficeLocation";
-import EventLocation from "./EventLocation";
+import Header from "../Models/Header";
+import MainSlider from "../Models/MainSlider";
+import OfficeLocation from "../components/OfficeLocation";
+import EventLocation from "../components/EventLocation";
+import FooterTest from "../Models/FooterTest";
+
 
 const WhereWeWork = () => {
     return (
         <div>
-            <Header/>
-            <MainSlider/>
             <OfficeLocation/>
             <EventLocation/>
             <FooterTest/>

@@ -1,4 +1,5 @@
 import React from 'react';
+import {FormattedMessage} from "react-intl";
 
 const MainAbout = () => {
     return (
@@ -6,68 +7,43 @@ const MainAbout = () => {
                 <div className="about__content">
                     <div className="container">
                         <div className="about__title">
-                            Pro consult company UZBEKISTAN
+                            <FormattedMessage id={"about_title"}/>
                         </div>
                         <div className="about__text">
-                            Pro Consult Company is a multi-industrial engineering, management and development
-                            consultancy, who
-                            delivers verified and tailored solutions for the clients and partners.
-                            Using extensive experience and practice of its experts PCC provides consultancy and
-                            engineering
-                            services across the project lifecycle: initiation, feasibility studies and researches,
-                            design,
-                            procurement, construction, comissioning, operation and maintenance.
-                            PCC prioritizes quality, efficiency and innovativeness, integrates national knowledge with
-                            international experience and is committed to deliver fit for purpose and sustainable
-                            solutions.
-                            PCC does not set competition to show its superiority, instead PCC cooperates with the
-                            leaders of the
-                            piece of area when it is wise to provide the best result for customers and clients and
-                            recieve true
-                            recognition.
+                            <FormattedMessage id={"about_text"}/>
                         </div>
-                        <a className="about__link" href="">More info</a>
+                        <a className="about__link" href=""><FormattedMessage id={"more_info"}/></a>
                         <div className="about__title-sphera">
-                            Core areas
+                            <FormattedMessage id={'about_title_sphera'}/>
                         </div>
                         <div className="about__items">
                             <div className="about__item">
                                 <div className="about-img"><img src="../image/about/about-1.svg" alt=""/></div>
                                 <div className="about__item-title">
-                                    Services
+                                    <FormattedMessage id={'about_item_title_services'}/>
                                 </div>
                                 <div className="about__item-text">
-                                    We provide services in areas such as management of national and
-                                    international projects in Uzbekistan, including assistance in drafting contracts,
-                                    organization of procurement...
+                                    <FormattedMessage id={'about_item_text_services'}/>
                                 </div>
                                 <div className="about__item__btn"><a href="">more info</a></div>
                             </div>
                             <div className="about__item">
                                 <div className="about-img"><img src="../image/about/about-2.png" alt=""/></div>
                                 <div className="about__item-title">
-                                    Sectors
+                                    <FormattedMessage id={'about_item_title_sectors'}/>
                                 </div>
                                 <div className="about__item-text">
-                                    The company provides services in various industries, such as energy, civil
-                                    engineering,
-                                    heavy and light industry, as well as services related to the implementation of
-                                    investment
-                                    projects.
+                                    <FormattedMessage id={'about_item_text_sectors'}/>
                                 </div>
                                 <div className="about__item__btn"><a href="">more info</a></div>
                             </div>
                             <div className="about__item">
                                 <div className="about-img"><img src="../image/about/about-3.png" alt=""/></div>
                                 <div className="about__item-title">
-                                    Education
+                                    <FormattedMessage id={'about_item_title_education'}/>
                                 </div>
                                 <div className="about__item-text">
-                                    courses to improve the qualifications of engineers and also individual consultants.
-                                    Pro
-                                    consult company is a developer of author's training courses and periodically
-                                    conducts
-                                    seminars...
+                                    <FormattedMessage id={'about_item_text_education'}/>
                                 </div>
                                 <div className="about__item__btn"><a href="">more info</a></div>
                             </div>

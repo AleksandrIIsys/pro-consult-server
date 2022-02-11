@@ -2,6 +2,7 @@ import React, {useContext, useEffect} from 'react';
 import {Context} from "../index";
 import TestimonialsElement from "../components/TestimonialsElement";
 import {observer} from "mobx-react-lite";
+import {FormattedMessage} from "react-intl";
 
 const MainTestimonials = observer(() => {
     const {testimonials} = useContext(Context)
@@ -17,7 +18,7 @@ const MainTestimonials = observer(() => {
         <div className="testimonials">
             <div className="container">
                 <div className="testimonials__title">
-                    What Our Clients Say
+                    <FormattedMessage id={'testimonials_title'}/>
                 </div>
                 <div className="testimonials__slider">{
                     testimonials.getTestimonials().map(o => <TestimonialsElement testimonials = {o}></TestimonialsElement>)}
