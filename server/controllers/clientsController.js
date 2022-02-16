@@ -1,4 +1,5 @@
 const path = require('path')
+const mongoose = require('mongoose')
 const {ClientsElems} = require("../models/models");
 class Clients{
     getAll(req,res){
@@ -6,6 +7,8 @@ class Clients{
             return res.send(docs)
         })
     }
+
+
 }
 
 module.exports = new Clients();

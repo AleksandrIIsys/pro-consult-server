@@ -1,5 +1,6 @@
 const path = require('path')
 const fs = require('fs')
+const uuid = require('uuid')
 const {NewsElems} = require("../models/models");
 const mongoose = require("mongoose");
 
@@ -12,21 +13,22 @@ class News{
     }
     addNews(req,res){
         const object = JSON.parse(req.body.data);
-        console.log(object.id);
-        const News = new NewsElems({
-            _id: new mongoose.Schema.Types.ObjectId(),
-            date:"",
+        let img = req.files.picture;
+        console.log(img);
+        const fileName = uuid.v4() + ".jpg"
+        img.mv(path.resolve(__dirname,'..','static',fileName))
+        const newsDB = new NewsElems({
+            date:object.date,
             id: object.id,
-            image: object.image,
+            image: fileName,
             text: object.text,
             title: object.title
         })
-        console.log(News);
-        // News.save(function (err){
-        //     if(err) throw err
-        //     console.log('Author successfully saved.');
-        // })
-        fs.writeFile('./news.json',req.body.data,(err)=>{})
+        res.send(newsDB);
+        newsDB.save(function (err){
+            if(err) return console.log(err)
+            console.log("Сохранение объект", newsDB)
+        })
     }
 }
 

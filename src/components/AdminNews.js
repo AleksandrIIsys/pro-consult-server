@@ -8,26 +8,16 @@ const AdminNews = observer(() => {
     const {news} = useContext(Context)
     const [haveIMG,setHAVE] = useState(false);
     const [url,setURL] = useState('gray');
+    const [image,setImage] = useState('')
     const onDrop = useCallback(async acceptedFiles => {
         setHAVE(true);
-        let myFormData = new FormData();
+        setImage(acceptedFiles[0])
         const filereader = new FileReader()
-        console.log(filereader);
         filereader.onload = file=>{
             setURL(file.target.result)
         }
         filereader.readAsDataURL(acceptedFiles[0])
-
-        // myFormData.append("picture", acceptedFiles[0]);
-        // const f = await fetch('/api/admin/picture_for', {
-        //     method: "POST",
-        //     body: myFormData,
-        // })
-        // f.json().then((test) => {
-        //     setURL('/img/' + test.url)
-        // })
     }, [])
-    console.log("!")
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
     const columns = [
@@ -60,22 +50,20 @@ const AdminNews = observer(() => {
                     </div>
                 </div>
                 <input type={"button"} value={"ok"}  onClick={async ()=>{
-                    // let myFormData = new FormData();
-                    // let file = document.querySelector("#file_send")
-                    // myFormData.append("picture",file.files[0]);
-                    // let fet = await fetch('/api/admin/',
-                    //     {method:"POST",
-                    //         body:myFormData,
-                    //     })
                     const fd = new FormData();
-                    const obj = {id:String(news.getNews().length+1),image:url,title:document.querySelector(".text_title_send").value,text:document.querySelector(".text_area_news").value,date:'aboba'}
-                    news.AddNews(obj)
+                    const obj = {id:String(news.getNews().length+1),title:document.querySelector(".text_title_send").value,text:document.querySelector(".text_area_news").value,date:new Date()}
                     fd.append('data',JSON.stringify(obj))
-                    await fetch('/api/news/',
+                    fd.append('picture',image)
+                    const f = await fetch('/api/news/',
                         {
                                 method: "POST",
                                 body: fd
                             })
+                        f.json().then((ns)=>{
+                        console.log(JSON.stringify(ns));
+                        news.AddNews(ns)
+                    })
+
                 }}/>
             </div>
         <div className={"news_panel"}>

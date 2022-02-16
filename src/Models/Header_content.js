@@ -1,6 +1,8 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 import {LOCALES} from "../i18n/Locale";
+import {FormattedMessage, IntlProvider} from "react-intl";
+import {MessageHeader} from "../i18n/MessageHeader";
 const HeaderContent = ({currentLocale,handleChangeLocale}) => {
     const languages = [
         { name: 'English', code: LOCALES.ENGLISH },
@@ -9,6 +11,7 @@ const HeaderContent = ({currentLocale,handleChangeLocale}) => {
         ]
     return (
         <div className="header__content">
+            <IntlProvider messages={MessageHeader[currentLocale]} locale={currentLocale} defaultLocale={LOCALES.ENGLISH}>
             <div className="container">
                 <div className="header__inner">
                     <div className="header__content-logo">
@@ -21,60 +24,54 @@ const HeaderContent = ({currentLocale,handleChangeLocale}) => {
                             <span className="icon-bars"></span>
                         </div>
                         <ul className="topmenu">
-                            <li><div className="active">Who we are<span
+                            <li><div className="active">
+                                <FormattedMessage id={"who_we_are"}/><span
                                 className="fa fa-angle-down"></span></div>
                                 <ul className="submenu">
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="">Governance</a></li>
-                                    <li><a href="">Foundation</a></li>
-                                    <li><a href="">Partners</a></li>
-                                    <li><a href="">Membership</a></li>
-                                    <li><a href="">Polices & Strategies</a></li>
-                                    <li><a href="">References</a></li>
+                                    <li><a href="about.html"><FormattedMessage id={"about_us"}/></a></li>
+                                    <li><a href=""><FormattedMessage id={"governance"}/></a></li>
+                                    <li><a href=""><FormattedMessage id={"foundation"}/></a></li>
+                                    <li><a href=""><FormattedMessage id={"partners"}/></a></li>
+                                    <li><a href=""><FormattedMessage id={"membership"}/></a></li>
+                                    <li><a href=""><FormattedMessage id={"police"}/> </a></li>
+                                    <li><a href=""><FormattedMessage id={"references"}/></a></li>
                                 </ul>
                             </li>
-                            <li><div>What we do<i className="bi bi-caret-right-fill"></i></div>
+                            <li><div><FormattedMessage id={"what_we_do"}/><i className="bi bi-caret-right-fill"></i></div>
                                 <ul className="submenu">
-                                    <li><a href="">Infrastructure</a>
+                                    <li><a href=""><FormattedMessage id={"sectors"}/></a>
                                         <ul className="submenu">
-                                            <li><a href="">Water and Environment<i
-                                                className="bi bi-caret-right-fill"></i></a></li>
-                                            <li><a href="">Energy and Resources</a></li>
-                                            <li><a href="">Transport</a></li>
-                                            <li><a href="">Telecommunication</a></li>
+                                            <li><a href=""><FormattedMessage id={"water_and_environment"}/></a></li>
+                                            <li><a href=""><FormattedMessage id={"energy_and_resources"}/></a></li>
+                                            <li><a href=""><FormattedMessage id={"transport"}/></a></li>
+                                            <li><a href=""><FormattedMessage id={"telecommunication"}/></a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="services.html">Services</a>
+                                    <li><a href="services.html"><FormattedMessage id={"services"}/></a>
                                         <ul className="submenu">
-                                            <li><a href="services.html#plan">Plan </a></li>
-                                            <li><a href="#design">Design</a></li>
-                                            <li><a href="#delivery">Deliver</a></li>
-                                            <li><a href="#manage">Manage</a></li>
-                                            <li><a href="#decommission">Decommission</a></li>
+                                            <li><a href="services.html#plan"><FormattedMessage id={"plan"}/></a></li>
+                                            <li><a href="#design"><FormattedMessage id={"design"}/></a></li>
+                                            <li><a href="#delivery"><FormattedMessage id={"deliver"}/></a></li>
+                                            <li><a href="#manage"><FormattedMessage id={"manage"}/></a></li>
+                                            <li><a href="#decommission"><FormattedMessage id={"decommission"}/></a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="">Education</a>
-                                        <li><a href="">Projects</a>
-                                            <ul className="submenu">
-                                                <li><a href="">Infrastructure</a></li>
-                                                <li><a href="">Management Services</a></li>
-                                                <li><a href="">Urban development </a></li>
-                                            </ul>
-                                        </li>
+                                    <li><a href=""><FormattedMessage id={"education"}/></a>
                                     </li>
                                 </ul>
                             </li>
 
-                            <li><a href={"/where-we-work"}>Where We work<span className="fa fa-angle-down"></span></a>
+                            <li><a href={"/where-we-work"}><FormattedMessage id={"where_we_work"}/><span className="fa fa-angle-down"></span></a>
                             </li>
-                            <li><a href="/news">News<span className="fa fa-angle-down"></span></a></li>
-                            <li><a href="">Careers<span className="fa fa-angle-down"></span></a></li>
-                            <li><a href="">contact <span className="fa fa-angle-down"></span></a></li>
+                            <li><a href="/news"><FormattedMessage id={"news"}/><span className="fa fa-angle-down"></span></a></li>
+                            <li><a href=""><FormattedMessage id={"careers"}/><span className="fa fa-angle-down"></span></a></li>
+                            <li><a href=""><FormattedMessage id={"contact"}/> <span className="fa fa-angle-down"></span></a></li>
                         </ul>
                     </nav>
                 </div>
 
             </div>
+            </IntlProvider>
             <div className="lang-menu">
                 <select className={'selected-lang'} onChange={handleChangeLocale} value={currentLocale}>
                 {languages.map(({ name, code }) => (
