@@ -1,14 +1,13 @@
 const mongoose = require("mongoose");
 const Scheme = mongoose.Schema;
 const NewsElems = mongoose.model("News",new Scheme({
+    _id: mongoose.Types.ObjectId,
     date:String,
-    id:String,
     image:String,
     text:String,
     title:String
 }))
 const ClientsElems = mongoose.model("Clients", new Scheme(({
-    _id:mongoose.Schema.Types.ObjectId,
     id:String,
     image:String,
     date:String

@@ -19,7 +19,6 @@ const AdminNews = observer(() => {
         filereader.readAsDataURL(acceptedFiles[0])
     }, [])
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
-
     const columns = [
         { field: 'id', fieldName: '#' },
         { field: 'image', fieldName: 'Image' },
@@ -51,7 +50,12 @@ const AdminNews = observer(() => {
                 </div>
                 <input type={"button"} value={"ok"}  onClick={async ()=>{
                     const fd = new FormData();
-                    const obj = {id:String(news.getNews().length+1),title:document.querySelector(".text_title_send").value,text:document.querySelector(".text_area_news").value,date:new Date()}
+                    const now = new Date();
+                    const obj = {
+                        title:document.querySelector(".text_title_send").value,
+                        text:document.querySelector(".text_area_news").value,
+                        date:now.toLocaleString("ru-RU")
+                    }
                     fd.append('data',JSON.stringify(obj))
                     fd.append('picture',image)
                     const f = await fetch('/api/news/',
@@ -60,8 +64,8 @@ const AdminNews = observer(() => {
                                 body: fd
                             })
                         f.json().then((ns)=>{
-                        console.log(JSON.stringify(ns));
-                        news.AddNews(ns)
+                            ns.id=news.getNews().length+1
+                            news.AddNews(ns)
                     })
 
                 }}/>

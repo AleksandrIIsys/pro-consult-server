@@ -2,7 +2,7 @@ table {
   td {
     vertical-align: middle;
     span{
-      max-width: 310px;
+      max-width: 400px;
       display: -webkit-box;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
@@ -14,9 +14,8 @@ table {
   background: white;
 }
 .title{
-  overflow-x:auto;
+  overflow-x:hidden;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
 .custom-table__action-btn {

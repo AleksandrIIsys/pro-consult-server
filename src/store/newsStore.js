@@ -16,8 +16,8 @@ export default class NewsStore{
     AddNews(news){
         this._news.push(news)
     }
-    EditNews(elem){
-        this._news[elem.id-1] = elem
+    EditNews(edit){
+        this._news[this._news.map(elem=>{return elem._id}).indexOf(edit._id)] = edit
     }
     getNews(){
         return this._news;

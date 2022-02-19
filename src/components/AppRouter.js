@@ -19,8 +19,12 @@ const AppRouter = ({currentLocale,handleChangeLocale}) => {
         fetch('/api/news/').
         then((response)=>{
             return response.json()
-        }).then((n)=>{
-            news.setNews(n);})
+        }).then((n)=> {
+            n.forEach((elem, index) => {
+                elem.id = index + 1
+            });
+            news.setNews(n)
+        });
         return () => { isMounted = false };
     }, []);
 
