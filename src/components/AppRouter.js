@@ -11,20 +11,18 @@ import WhereWeWork from "../pages/WhereWeWork";
 import Header from "../Models/Header";
 import MainSlider from "../Models/MainSlider";
 import MainPage from "../pages/MainPage";
+import {fetchNews} from "../http/Api";
 
 const AppRouter = ({currentLocale,handleChangeLocale}) => {
     const {news} = useContext(Context)
     useEffect(() => {
         let isMounted = true;
-        fetch('/api/news/').
-        then((response)=>{
-            return response.json()
-        }).then((n)=> {
-            n.forEach((elem, index) => {
+        fetchNews().then((data)=>{
+            data.forEach((elem, index) => {
                 elem.id = index + 1
             });
-            news.setNews(n)
-        });
+            news.setNews(data)
+        })
         return () => { isMounted = false };
     }, []);
 

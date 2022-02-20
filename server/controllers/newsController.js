@@ -33,10 +33,11 @@ class News{
     editNews(req,res){
         const data = JSON.parse(req.body.data)
         console.log(req.files);
+        let isPhotoChange = false
         if(req.files !== null) {
             const {image} = req.files
             const fileName = uuid.v4() + ".jpg"
-
+            isPhotoChange = true
             image.mv(path.resolve(__dirname,'..','static',fileName))
             data.image = "/img/"+fileName
         }
@@ -48,10 +49,13 @@ class News{
             title: data.title
         },(err,data)=>{
             if (err) throw err;
-            try {
-                fs.unlink(path.resolve(__dirname+"/../static/" + data.image.substring(5)),(err)=>{})
-            }catch (e){
-                throw e
+            if(isPhotoChange) {
+                try {
+                    fs.unlink(path.resolve(__dirname + "/../static/" + data.image.substring(5)), (err) => {
+                    })
+                } catch (e) {
+                    throw e
+                }
             }
         })
 

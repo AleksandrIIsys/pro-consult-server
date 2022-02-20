@@ -1,80 +1,51 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {useDropzone} from "react-dropzone";
-import EditableTable from "./EditableTable";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
+import {Form, FormCheck, FormControl} from "react-bootstrap";
+import {LOCALES} from "../i18n/Locale";
+import CreatePanel from "./CreatePanel";
+import NewsTable from "./EditableTable/NewsTable";
 
 const AdminNews = observer(() => {
     const {news} = useContext(Context)
-    const [haveIMG,setHAVE] = useState(false);
-    const [url,setURL] = useState('gray');
-    const [image,setImage] = useState('')
-    const onDrop = useCallback(async acceptedFiles => {
-        setHAVE(true);
-        setImage(acceptedFiles[0])
-        const filereader = new FileReader()
-        filereader.onload = file=>{
-            setURL(file.target.result)
-        }
-        filereader.readAsDataURL(acceptedFiles[0])
-    }, [])
-    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+    const [lang, setLang] = useState("ru-RU")
     const columns = [
-        { field: 'id', fieldName: '#' },
-        { field: 'image', fieldName: 'Image' },
-        { field: 'title', fieldName: 'Title' },
-        { field: 'text', fieldName: 'Text' },
-        { field: "date", fieldName: 'Date' },
+        {field: 'id', fieldName: '#'},
+        {field: 'image', fieldName: 'Image'},
+        {field: 'title', fieldName: 'Title'},
+        {field: 'text', fieldName: 'Text'},
+        {field: "date", fieldName: 'Date'},
     ];
-
+    let isChange = false
+    const handleChangeLanguage = (e)=>{
+        setLang(e.target.value)
+    }
     return (
         <div className={"admin_news"}>
             <div className={"top_panel"}>
-                <div>
-                    <div className={"admin_create_news"}>
-                        <div className={"admin_create_news-ta"}>
-                            <input type={"text"} className={"text_title_send"}/>
-                            <textarea className={"text_area_news"}></textarea>
-                        </div>
-                        <div style={{cursor:'pointer'}} {...getRootProps()}>
-                            <input {...getInputProps()} />
-
-                            {
-                                haveIMG ? <img src={url} className={'admin_create_news-image'} style={{}}/> :
-                                    isDragActive ?
-                                        <p>Drop the files here ...</p> :
-                                        <p>Drag 'n' drop some files here, or click to select files</p>
+                <Form>
+                    {Object.keys(LOCALES).map(language => {
+                        return <Form.Check
+                            type={'radio'}
+                            name={"group1"}
+                            label={language}
+                            checked={LOCALES[language] === lang}
+                            value={LOCALES[language]}
+                            onClick={(e) => {
+                                handleChangeLanguage(e)
+                                isChange=!isChange
                             }
-                        </div>
-                    </div>
+                            }
+                        />
+                    })}
+                </Form>
+               <CreatePanel language={lang} ></CreatePanel>
+            </div>
+            <div className={"news_panel"}>
+                <div>
+                    <NewsTable rows={news.getNews()} columns={columns} language={lang} actions/>
                 </div>
-                <input type={"button"} value={"ok"}  onClick={async ()=>{
-                    const fd = new FormData();
-                    const now = new Date();
-                    const obj = {
-                        title:document.querySelector(".text_title_send").value,
-                        text:document.querySelector(".text_area_news").value,
-                        date:now.toLocaleString("ru-RU")
-                    }
-                    fd.append('data',JSON.stringify(obj))
-                    fd.append('picture',image)
-                    const f = await fetch('/api/news/',
-                        {
-                                method: "POST",
-                                body: fd
-                            })
-                        f.json().then((ns)=>{
-                            ns.id=news.getNews().length+1
-                            news.AddNews(ns)
-                    })
-
-                }}/>
             </div>
-        <div className={"news_panel"}>
-            <div>
-                <EditableTable rows={news.getNews()} columns={columns} actions/>
-            </div>
-        </div>
         </div>
     );
 });

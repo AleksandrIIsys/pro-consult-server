@@ -4,8 +4,16 @@ const NewsElems = mongoose.model("News",new Scheme({
     _id: mongoose.Types.ObjectId,
     date:String,
     image:String,
-    text:String,
-    title:String
+    text:{
+        "ru-RU":String,
+        "en-US":String,
+        "uz-UZ":String,
+    },
+    title:{
+        "ru-RU":String,
+        "en-US":String,
+        "uz-UZ":String,
+    }
 }))
 const ClientsElems = mongoose.model("Clients", new Scheme(({
     id:String,

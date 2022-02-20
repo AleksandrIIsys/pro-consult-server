@@ -3,15 +3,13 @@ import {Context} from "../index";
 import TestimonialsElement from "../components/TestimonialsElement";
 import {observer} from "mobx-react-lite";
 import {FormattedMessage} from "react-intl";
+import {fetchTestimonials} from "../http/Api";
 
 const MainTestimonials = observer(() => {
     const {testimonials} = useContext(Context)
     useEffect(()=>{
         let isMounted = true;
-        fetch('/api/testimonials/').
-        then((response)=>{
-            return response.json()
-        }).then((t)=>testimonials.setTestimonials(t))
+        fetchTestimonials().then((t)=>testimonials.setTestimonials(t))
         return () => { isMounted = false };
     },[])
     return (

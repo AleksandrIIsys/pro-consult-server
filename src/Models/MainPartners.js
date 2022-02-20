@@ -4,14 +4,12 @@ import PartnersElement from "./PartnersElement";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
 import {FormattedMessage} from "react-intl";
+import {fetchPartners} from "../http/Api";
 const MainPartners = observer(() => {
     const {partners} = useContext(Context);
     useEffect(()=>{
         let isMounted = true;
-        fetch('/api/partners/').
-        then((response)=>{
-            return response.json()
-        }).then((p)=>partners.setPartners(p))
+        fetchPartners().then((data)=>partners.setPartners(data))
         return () => { isMounted = false };
     },[])
     return (

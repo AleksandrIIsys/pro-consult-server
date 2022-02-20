@@ -4,17 +4,14 @@ import ClientsElement from "./ClientsElement";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
 import {FormattedMessage} from "react-intl";
+import {fetchClients} from "../http/Api";
 const MainClients = observer(() => {
     const {clients} = useContext(Context);
     useEffect(()=>{
         let isMounted = true;
-        fetch('/api/clients/').
-        then((response)=>{
-            return response.json()
-        }).then((c)=>clients.setClients(c))
+        fetchClients().then((c)=>clients.setClients(c))
         return () => { isMounted = false };
     },[])
-    console.log(clients.getClients())
     return (
         <div className={"clients"}>
             <div>
