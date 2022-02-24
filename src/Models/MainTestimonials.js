@@ -7,11 +7,6 @@ import {fetchTestimonials} from "../http/Api";
 
 const MainTestimonials = observer(() => {
     const {testimonials} = useContext(Context)
-    useEffect(()=>{
-        let isMounted = true;
-        fetchTestimonials().then((t)=>testimonials.setTestimonials(t))
-        return () => { isMounted = false };
-    },[])
     return (
         <div className="testimonials">
             <div className="container">

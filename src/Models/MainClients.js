@@ -9,7 +9,6 @@ const MainClients = observer(() => {
     const {clients} = useContext(Context);
     useEffect(()=>{
         let isMounted = true;
-        fetchClients().then((c)=>clients.setClients(c))
         return () => { isMounted = false };
     },[])
     return (

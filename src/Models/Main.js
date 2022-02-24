@@ -13,7 +13,7 @@ const Main = () => {
             <MainAbout></MainAbout>
             <MainNews></MainNews>
             <MainCapabilities></MainCapabilities>
-            <MainClients></MainClients>
+            <MainClients ></MainClients>
             <MainPartners></MainPartners>
             <MainTestimonials></MainTestimonials>
         </main>

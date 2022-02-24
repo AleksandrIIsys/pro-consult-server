@@ -75,7 +75,7 @@ const HeaderContent = ({currentLocale,handleChangeLocale}) => {
             <div className="lang-menu">
                 <select className={'selected-lang'} onChange={handleChangeLocale} value={currentLocale}>
                 {languages.map(({ name, code }) => (
-                    <option key={code} value={code}>
+                    <option key={code} value={code} selected={code === currentLocale}>
                         {name}
                     </option>
                 ))}

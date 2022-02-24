@@ -2,10 +2,10 @@ import React from 'react';
 import FooterTest from "../Models/FooterTest";
 import Main from "../Models/Main";
 
-const MainPage = () => {
+const MainPage = ({currentLocale, handleChangeLocale}) => {
     return (
         <div>
-            <Main></Main>
+            <Main currentLocale={currentLocale} handleChangeLocale={handleChangeLocale}></Main>
             {/*<Footer></Footer>*/}
             <FooterTest></FooterTest>
         </div>

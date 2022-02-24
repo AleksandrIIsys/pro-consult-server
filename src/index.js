@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import PartnersStore from "./store/partnersStore";
 import ClientsStore from "./store/clientsStore";
 import TestimonialsStore from "./store/testimonialsStore";
+import LocaleStore from "./store/localeStore";
 export const Context = createContext(null);
 ReactDOM.render(
 
@@ -14,7 +15,8 @@ ReactDOM.render(
       news: new NewsStore(),
       partners: new PartnersStore(),
       clients: new ClientsStore(),
-      testimonials: new TestimonialsStore()
+      testimonials: new TestimonialsStore(),
+      locale: new LocaleStore(),
   }}>
     <App />
   </Context.Provider>,

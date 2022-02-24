@@ -85,9 +85,14 @@ const CreatePanel = ({language}) => {
                 obj.date = new Date().toLocaleString("ru-RU")
                 fd.append('data', JSON.stringify(obj))
                 fd.append('picture', image)
-                createNews(fd).json().then((ns) => {
-                    ns.id = news.getNews().length + 1
-                    news.AddNews(ns)
+                createNews(fd).then((ns) => {
+                    const promise = ns.json()
+                    promise.then((data)=>{
+                        data.id = news.getNews().length + 1
+                        console.log(data.title);
+                        news.AddNews(data)
+                    })
+
                 })
 
             }}/>

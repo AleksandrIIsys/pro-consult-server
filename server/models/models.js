@@ -16,24 +16,34 @@ const NewsElems = mongoose.model("News",new Scheme({
     }
 }))
 const ClientsElems = mongoose.model("Clients", new Scheme(({
-    id:String,
+    _id:mongoose.Schema.Types.ObjectId,
     image:String,
     date:String
 
 })))
 const PartnersElems = mongoose.model("Partners", new Scheme(({
     _id:mongoose.Schema.Types.ObjectId,
-    id:String,
     image:String,
     date:String
 })))
 const TestimonialsElems = mongoose.model("Testimonials", new Scheme(({
     _id:mongoose.Schema.Types.ObjectId,
-    id:String,
     image:String,
-    text:String,
-    name:String,
-    position:String,
+    text:{
+        "ru-RU":String,
+        "en-US":String,
+        "uz-UZ":String,
+    },
+    name:{
+        "ru-RU":String,
+        "en-US":String,
+        "uz-UZ":String,
+    },
+    position:{
+        "ru-RU":String,
+        "en-US":String,
+        "uz-UZ":String,
+    },
     date:String
 })))
 module.exports = {NewsElems,ClientsElems,PartnersElems,TestimonialsElems};

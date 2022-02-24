@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Pagination, Mousewheel} from "swiper";
 import "swiper/css";
@@ -6,14 +6,13 @@ import "swiper/css/pagination";
 import "../css/style.css"
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
-import Footer from "../Models/Footer";
-import Header from "../Models/Header";
-import MainSlider from "../Models/MainSlider";
 import FooterTest from "../Models/FooterTest";
+import {logDOM} from "@testing-library/react";
 
 
 const News =observer( (props) => {
-    const {news} = useContext(Context)
+    const {news,locale} = useContext(Context)
+    useEffect(()=> console.log(1),[])
     return (
         <div>
             <Swiper
@@ -37,11 +36,11 @@ const News =observer( (props) => {
                                     <div style={{display:"flex", flexDirection: "column", width: "70%", marginRight: "25px"}}>
                                         <div className="titleNews"
                                              style={{textAlign: "left", padding: "10px", fontWeight: "bold", backgroundColor: "#fff", borderRadius: "10px"}}>
-                                            {news_element.title}
+                                            {news_element.title[locale.getLocale()]}
                                         </div>
                                         <div className="textNews"
                                              style={{textAlign: "justify", padding: "10px", backgroundColor: "#fff", marginTop: "30px", borderRadius: "10px"}}>
-                                            {news_element.text.substring(0,1000)}
+                                            {news_element.text[locale.getLocale()].substring(0,1000)}
                                         </div>
                                     </div>
                                     <img src={news_element.image} style={{width: "28%", border: "2px solid #fff",alignSelf:'flex-start', borderRadius: "10px", backgroundColor: "#fff"}}/>

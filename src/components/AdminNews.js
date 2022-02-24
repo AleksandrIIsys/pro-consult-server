@@ -1,7 +1,7 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, { useContext, useState} from 'react';
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
-import {Form, FormCheck, FormControl} from "react-bootstrap";
+import {Form} from "react-bootstrap";
 import {LOCALES} from "../i18n/Locale";
 import CreatePanel from "./CreatePanel";
 import NewsTable from "./EditableTable/NewsTable";
@@ -39,7 +39,7 @@ const AdminNews = observer(() => {
                         />
                     })}
                 </Form>
-               <CreatePanel language={lang} ></CreatePanel>
+               <CreatePanel language={lang} />
             </div>
             <div className={"news_panel"}>
                 <div>

@@ -1,24 +1,21 @@
-import React, { useContext, useState} from 'react';
-import {Form, Table} from "react-bootstrap";
-import {PencilFill, Save, Trash, XSquare} from 'react-bootstrap-icons';
-import './EditableTable.styles.scss';
+import React, {useContext, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import {Context} from "../../index";
-import {deleteNews, editNews} from "../../http/Api";
-import {forEach} from "react-bootstrap/ElementChildren";
+import {deleteClient, editClient} from "../../http/Api";
+import {Form, Table} from "react-bootstrap";
+import {PencilFill, Save, Trash, XSquare} from "react-bootstrap-icons";
 
-export const NewsTable = observer(({columns, language, actions}) => {
-    const {news} = useContext(Context);
+const ClientsTable = observer(({columns, language, actions}) => {
+    const {clients} = useContext(Context);
     const [isEditMode, setIsEditMode] = useState(false);
     const [rowIDToEdit, setRowIDToEdit] = useState(undefined);
-    const [rowsState, setRowsState] = useState(news.getNews());
+    const [rowsState, setRowsState] = useState(clients.getClients());
     const [editedRow, setEditedRow] = useState();
     const [file, setFile] = useState(null);
-
     const handleEdit = (rowID) => {
         setIsEditMode(true);
         setFile(null)
-        setEditedRow(news.getNews().filter(row => row.id === rowID)[0]);
+        setEditedRow(clients.getClients().filter(row => row.id === rowID)[0]);
         setRowIDToEdit(rowID);
     }
     const handleRemoveRow = async (rowID) => {
@@ -33,9 +30,9 @@ export const NewsTable = observer(({columns, language, actions}) => {
         })
         const fd = new FormData()
         fd.append("data", JSON.stringify(deleteData));
-        deleteNews(fd).then((res) => {
+        deleteClient(fd).then((res) => {
             if (res.status === 200) {
-                news.setNews(newData);
+                clients.setClients(newData);
             }
         }).catch((e) => {
             console.log(e);
@@ -53,30 +50,21 @@ export const NewsTable = observer(({columns, language, actions}) => {
             filereader.readAsDataURL(e.target.files[0])
         }
     }
-    const handleOnChangeField = (e) => {
-        const {name: fieldName, value} = e.target;
-        let obj = editedRow
-        obj[fieldName][language] = value
-        setEditedRow(obj)
-    }
-
     const handleCancelEditing = () => {
         setIsEditMode(false);
         setEditedRow(undefined);
     }
-
     const handleSaveRowChanges = () => {
         setTimeout(async () => {
             setIsEditMode(false);
             const fd = new FormData()
             if (file !== null)
                 fd.append('image', file);
-            fd.append("data", JSON.stringify(editedRow))
-            editNews(fd).then((res) => {
+            editClient(fd).then((res) => {
                 if (res.status === 200) {
                     const promise = res.json()
                     promise.then((data) => {
-                        news.EditNews(data)
+                        clients.EditClients(data)
                     })
                 }
             })
@@ -110,34 +98,9 @@ export const NewsTable = observer(({columns, language, actions}) => {
                                 <input type={"file"} onChange={(e) => {
                                     handleOnChangeImage(e);
                                 }} id="file-input" style={{display: "none", width: "100px"}} autoComplete={"off"}
-                                       tabIndex={"-1"}/>
+                                />
                             </div>
                             : <span><img src={row.image} style={{width: "100px"}} alt={""}/></span>
-                        }
-                    </td>
-                    <td>
-                        {isEditMode && rowIDToEdit === row.id
-                            ? <Form.Control
-                                type='text'
-                                defaultValue={editedRow ? editedRow.title[language] : row.title[language]}
-                                id={row.id}
-                                name='title'
-                                onChange={(e) => handleOnChangeField(e, row.id)}
-                            />
-                            : <span className={"title"}>{row.title[language]}</span>
-                        }
-                    </td>
-                    <td>
-                        {isEditMode && rowIDToEdit === row.id
-                            ? <Form.Control
-                                as='textarea'
-                                defaultValue={editedRow ? editedRow.text[language] : row.text[language]}
-                                id={row.id}
-                                name='text'
-                                style={{overflowY: "none", height: "42px"}}
-                                onChange={(e) => handleOnChangeField(e, row.id)}
-                            />
-                            : <span>{row.text[language]}</span>
                         }
                     </td>
                     <td>
@@ -174,4 +137,4 @@ export const NewsTable = observer(({columns, language, actions}) => {
     );
 });
 
-export default NewsTable;
+export default ClientsTable;

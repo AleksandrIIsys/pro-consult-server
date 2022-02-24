@@ -3,10 +3,9 @@ import Slider from "react-slick";
 import NewsElement from "./NewsElement";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
-import {NavLink} from "react-router-dom";
 import {FormattedMessage} from "react-intl";
 const MainNews = observer(() => {
-    const {news} = useContext(Context)
+    const {news,locale} = useContext(Context)
     return (
         <div className="news">
             <div className="container">
@@ -16,7 +15,7 @@ const MainNews = observer(() => {
                 <Slider dots={true} infinite={true} speed={1000} slidesToScroll={1} arrows={false} slidesToShow={4}>
                     {
                         news.getNews().map(news_element=>
-                        <NewsElement news={news_element}></NewsElement>
+                        <NewsElement currentLocale={locale.getLocale()}  news={news_element}></NewsElement>
                     )}
                 </Slider>
                 <div className=" news__item__btn"><a href={"/news"}><FormattedMessage id={"all_news"}/></a>

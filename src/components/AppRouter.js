@@ -11,10 +11,15 @@ import WhereWeWork from "../pages/WhereWeWork";
 import Header from "../Models/Header";
 import MainSlider from "../Models/MainSlider";
 import MainPage from "../pages/MainPage";
-import {fetchNews} from "../http/Api";
+import {fetchClients, fetchNews, fetchPartners, fetchTestimonials} from "../http/Api";
+import TestimonialsTable from "./EditableTable/TestimonialsTable";
+import AdminTestimonials from "./AdminTestimonials";
+import AdminClients from "./AdminClients";
+import PartnersElement from "../Models/PartnersElement";
+import AdminPartners from "./AdminPartners";
 
 const AppRouter = ({currentLocale,handleChangeLocale}) => {
-    const {news} = useContext(Context)
+    const {news,testimonials,partners,clients} = useContext(Context)
     useEffect(() => {
         let isMounted = true;
         fetchNews().then((data)=>{
@@ -23,6 +28,26 @@ const AppRouter = ({currentLocale,handleChangeLocale}) => {
             });
             news.setNews(data)
         })
+        fetchTestimonials().then((data)=>{
+            data.forEach((elem, index) => {
+                elem.id = index + 1
+            });
+            testimonials.setTestimonials(data)
+        })
+        fetchClients().then((data)=>{
+            data.forEach((elem, index) => {
+                elem.id = index + 1
+            });
+            clients.setClients(data)
+        })
+        fetchPartners().then((data)=>{
+            data.forEach((elem, index) => {
+                elem.id = index + 1
+            });
+            partners.setPartners(data)
+        })
+
+
         return () => { isMounted = false };
     }, []);
 
@@ -36,9 +61,9 @@ const AppRouter = ({currentLocale,handleChangeLocale}) => {
 
             <Route  path={ADMIN_ROUTER} element={<Admin/>}>
                 <Route exact path={'news'} element={<AdminNews/>}></Route>
-                <Route path={"clients"} element={<p>2</p>}></Route>
-                <Route path={"partners"} element={<p>3</p>}></Route>
-                <Route path={"testimonials"} element={<p>4</p>}></Route>
+                <Route path={"clients"} element={<AdminClients/>}></Route>
+                <Route path={"partners"} element={<AdminPartners/>}></Route>
+                <Route path={"testimonials"} element={<AdminTestimonials/>}></Route>
             </Route>
             <Route  path={HOME_ROUTER} element={<Home/>}></Route>
         </Routes>
