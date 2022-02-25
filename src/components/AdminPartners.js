@@ -6,6 +6,7 @@ import {createClient, createPartner} from "../http/Api";
 import ClientsTable from "./EditableTable/ClientsTable";
 import PartnersElement from "../Models/PartnersElement";
 import PartnersTable from "./EditableTable/PartnersTable";
+import {Button} from "react-yandex-maps";
 
 const AdminPartners = observer(() => {
     const {partners} = useContext(Context)

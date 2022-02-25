@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {YMaps, Map, Placemark} from 'react-yandex-maps';
+import {YMaps, Map, Placemark, Button} from 'react-yandex-maps';
 
 const OfficeLocation = (() => {
     const [load,setLoad] = useState(false)

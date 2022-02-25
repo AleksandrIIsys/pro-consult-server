@@ -3,25 +3,17 @@ import {LOCALES} from "../i18n/Locale";
 import {useDropzone} from "react-dropzone";
 import {Context} from "../index";
 import {createNews} from "../http/Api";
+import {Form} from "react-bootstrap";
+import {set} from "mobx";
 
-const CreatePanel = ({language}) => {
-    const [newNews, setNewNews] = useState({
-        title: {
-            [LOCALES.ENGLISH]: "",
-            [LOCALES.RUSSIAN]: "",
-            [LOCALES.UZBEK]: "",
-        },
-        text: {
-            [LOCALES.ENGLISH]: "",
-            [LOCALES.RUSSIAN]: "",
-            [LOCALES.UZBEK]: "",
-        },
-        date: "",
-    });
-    const {news} = useContext(Context)
+const CreatePanel = (props) => {
+    const [newNews,setNewNews] = useState(props.data)
+    useEffect(()=>{setNewNews(props.data)
+    },[props.data])
+    const [language, setLang] = useState("ru-RU")
     const [haveIMG, setHAVE] = useState(false);
     const [url, setURL] = useState('gray');
-    const [image, setImage] = useState('')
+    const setImage = props.setImage
     const [titleEdit, setTitleEdit] = useState("")
     const [textEdit, setTextEdit] = useState("")
     const [isChange, setChange] = useState(true)
@@ -46,11 +38,27 @@ const CreatePanel = ({language}) => {
         setNewNews(obj)
         setChange(!isChange)
     }
-
+    const handleChangeLanguage = (e)=>{
+        setLang(e.target.value)
+    }
     return (
         <div>
             <div className={"admin_create_news"}>
                 <div className={"admin_create_news-ta"}>
+                    {Object.keys(LOCALES).map(_language => {
+                        return <Form.Check
+                            type={'radio'}
+                            name={"group1"}
+                            label={_language}
+                            checked={LOCALES[_language] === language}
+                            value={LOCALES[_language]}
+                            onClick={(e) => {
+                                handleChangeLanguage(e)
+                                setChange(!isChange)
+                            }
+                            }
+                        />
+                    })}
                     <input
                         type={"text"}
                         className={"text_title_send"}
@@ -79,23 +87,6 @@ const CreatePanel = ({language}) => {
                     }
                 </div>
             </div>
-            <input type={"button"} value={"ok"} onClick={async () => {
-                const fd = new FormData();
-                const obj = newNews
-                obj.date = new Date().toLocaleString("ru-RU")
-                fd.append('data', JSON.stringify(obj))
-                fd.append('picture', image)
-                createNews(fd).then((ns) => {
-                    const promise = ns.json()
-                    promise.then((data)=>{
-                        data.id = news.getNews().length + 1
-                        console.log(data.title);
-                        news.AddNews(data)
-                    })
-
-                })
-
-            }}/>
         </div>
     );
 };
