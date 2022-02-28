@@ -6,7 +6,6 @@ const MainPage = ({currentLocale, handleChangeLocale}) => {
     return (
         <div>
             <Main currentLocale={currentLocale} handleChangeLocale={handleChangeLocale}></Main>
-            {/*<Footer></Footer>*/}
             <FooterTest></FooterTest>
         </div>
     );

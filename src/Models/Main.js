@@ -1,5 +1,4 @@
 import React from 'react';
-import MainSlider from "./MainSlider";
 import MainAbout from "./MainAbout";
 import MainNews from "./MainNews";
 import MainCapabilities from "./MainCapabilities";

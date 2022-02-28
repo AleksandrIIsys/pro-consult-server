@@ -1,5 +1,5 @@
-import React, {useCallback, useState} from 'react';
-import {Dropzone, useDropzone} from "react-dropzone";
+import React from 'react';
+import {Dropzone} from "react-dropzone";
 import SideBar from "../components/SideBar";
 import {Outlet} from "react-router-dom";
 

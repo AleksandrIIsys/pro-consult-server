@@ -3,7 +3,6 @@ import {Context} from "../index";
 
 const TestimonialsElement = (props) => {
     const {locale} = useContext(Context)
-    console.log(props.testimonials.name);
     return (
         <div className="testimonials__items">
             <div className="testimonials__text">

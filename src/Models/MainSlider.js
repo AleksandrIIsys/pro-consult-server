@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
-import Slider from 'react-slick';
 import SliderElement from "./SliderElement";
-import { Swiper, SwiperSlide } from "swiper/react";
+import {Swiper, SwiperSlide} from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import {LOCALES} from "../i18n/Locale";
-import {EffectFade, Autoplay, Pagination} from "swiper";
+import {Autoplay, EffectFade, Pagination} from "swiper";
 import {IntlProvider} from "react-intl";
 
 const MainSlider = ({currentLocale}) => {
@@ -73,11 +72,6 @@ const MainSlider = ({currentLocale}) => {
     ])
     const locale = LOCALES.ENGLISH
     return (
-            // <Slider dots={false} infinite={true} speed={1000} slidesToScroll={1} arrows={false} slidesToShow={1} className={"slider_main"}>
-            //     {slides.map(slide=>
-            //         <SliderElement slide={slide}/>
-            //     )}
-            // </Slider>
             <Swiper
                 spaceBetween={30}
                 effect={"fade"}
@@ -88,10 +82,10 @@ const MainSlider = ({currentLocale}) => {
                 modules={[EffectFade, Pagination, Autoplay]}
                 className="mySwiper"
             >
-                {slides.map(slide=>
-                    <SwiperSlide>
+                {slides.map((slide,key)=>
+                    <SwiperSlide key={key}>
                         <IntlProvider messages={slide.lang[currentLocale]} locale={currentLocale} defaultLocale={LOCALES.ENGLISH}>
-                        <SliderElement slide = {slide}></SliderElement>
+                        <SliderElement slide = {slide} ></SliderElement>
                         </IntlProvider>
                     </SwiperSlide>
                 )}
