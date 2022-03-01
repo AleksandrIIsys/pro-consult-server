@@ -6,7 +6,7 @@ const fileUpload = require('express-fileupload')
 const router = require('./routers/index')
 const path = require("path");
 const app = express()
-const PORT = 8080
+const PORT = process.env.PORT
 const DB_CONN = process.env.DB_CONN
 app.use(cors())
 app.use(express.json())
