@@ -9,40 +9,34 @@ const path = require("path");
 const app = express()
 const PORT = process.env.PORT
 const DB_CONN = process.env.DB_CONN
+app.use(cors())
 cloudinary.config({
     cloud_name: 'dfco7yi3a',
     api_key: '237137654573476',
     api_secret: 'IsXbfJq5mN9TNdlSaGhHl-O4Ciw',
     secure: true})
-app.use(cors())
+// MULTER
+const multer = require('multer')
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'uploads/')
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.originalname)
+    }
+})
+app.use(multer({ storage }).single('picture'))
 app.use(express.json())
-app.use('/img',express.static(path.resolve(__dirname, 'static'), {
-    setHeaders: function(res, path) {
-        res.set("Access-Control-Allow-Origin", "*");
-        res.set("Access-Control-Allow-Headers", "Content-Type,X-Requested-With");
-        res.set("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-        res.set("X-Powered-By",' 3.2.1')
-        res.type("application/json");
-        res.type("jpg");
-    }
-}))
-app.use(express.static(path.resolve(__dirname, 'static'),{
-    setHeaders: function(res, path) {
-        res.set("Access-Control-Allow-Origin", "*");
-        res.set("Access-Control-Allow-Headers", "Content-Type,X-Requested-With");
-        res.set("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-        res.set("X-Powered-By",' 3.2.1')
-        res.type("application/json");
-        res.type("jpg");
-    }
-}))
-app.use(fileUpload({}))
+app.use('/img',express.static(path.resolve(__dirname, 'static')))
+app.use(express.static(path.resolve(__dirname, 'static')))
+// app.use(fileUpload({}))
 app.use('/api', router)
 app.get('/',(req,res)=>{
     res.send("WORKED")
 })
 async function start(){
     await mongoose.connect(DB_CONN)
+    console.log(1);
     app.listen(PORT,()=>console.log("hihih"))
 }
 start()
