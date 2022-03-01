@@ -14,7 +14,7 @@ class News{
         const object = JSON.parse(req.body.data);
         let img = req.files.picture;
         const fileName = uuid.v4() + ".jpg"
-        cloudinary.v2.uploader.upload(img,{unique_filename:true})
+        console.log(cloudinary.v2.uploader.upload(img, {unique_filename: true}));
         img.mv(path.resolve(__dirname,'..','static',fileName))
         const objID = new mongoose.Types.ObjectId()
         const newsDB = new NewsElems({
