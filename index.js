@@ -29,14 +29,12 @@ app.use(multer({ storage }).single('picture'))
 app.use(express.json())
 app.use('/img',express.static(path.resolve(__dirname, 'static')))
 app.use(express.static(path.resolve(__dirname, 'static')))
-// app.use(fileUpload({}))
 app.use('/api', router)
 app.get('/',(req,res)=>{
     res.send("WORKED")
 })
 async function start(){
     await mongoose.connect(DB_CONN)
-    console.log(1);
     app.listen(PORT,()=>console.log("hihih"))
 }
 start()

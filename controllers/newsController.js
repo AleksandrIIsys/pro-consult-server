@@ -24,7 +24,6 @@ class News{
                 fs.unlinkSync(path);
                 return { message: "Fail" };
             });
-        console.log(fileName);
         if(fileName.message !== 'Fail'){
                 const newsDB = new NewsElems({
                     _id: new mongoose.Types.ObjectId(),
