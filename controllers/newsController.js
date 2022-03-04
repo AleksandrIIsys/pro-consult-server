@@ -66,7 +66,7 @@ class News{
         }
         NewsElems.findByIdAndUpdate(data._id, {
             date: data.date,
-            image: fileName,
+            image: fileName.url,
             text: data.text,
             title: data.title
         }, (err, data) => {

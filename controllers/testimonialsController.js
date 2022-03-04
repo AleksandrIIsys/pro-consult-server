@@ -12,7 +12,36 @@ class Testimonials{
     }
     async addTestimonials(req, res) {
         const object = JSON.parse(req.body.data);
-        let img = req.files.picture;
+        const path = req.file.path;
+        let fileName = await cloudinary.uploader.upload(path,{resource_type: "image"}).then((result) => {
+            fs.unlinkSync(path);
+            return {
+                message: "Success",
+                url: result.url,
+            };
+        })
+            .catch((error) => {
+                fs.unlinkSync(path);
+                return { message: "Fail" };
+            });
+        if(fileName.message !== 'Fail'){
+        const testimonialsDB = new TestimonialsElems({
+            _id: new mongoose.Types.ObjectId(),
+            date: object.date,
+            image: fileName.url,
+            text: object.text,
+            name: object.name,
+            position: object.position
+        })
+        res.send(testimonialsDB);
+        testimonialsDB.save(function (err) {
+            if (err) return console.log(err)
+            console.log("Сохранение объект", testimonialsDB)
+        })
+        }
+    }
+    async editTestimonials(req, res) {
+        const data = JSON.parse(req.body.data)
         let fileName = data.image
         if (req.file !== undefined) {
             const path = req.file.path
@@ -35,48 +64,15 @@ class Testimonials{
                     fs.unlinkSync(path);
                 });
         }
-        const testimonialsDB = new TestimonialsElems({
-            _id: new mongoose.Types.ObjectId(),
-            date: object.date,
-            image: fileName,
-            text: object.text,
-            name: object.name,
-            position: object.position
-        })
-        res.send(testimonialsDB);
-        testimonialsDB.save(function (err) {
-            if (err) return console.log(err)
-            console.log("Сохранение объект", testimonialsDB)
-        })
-    }
-    editTestimonials(req,res){
-        const data = JSON.parse(req.body.data)
-        console.log(req.files);
-        let isPhotoChange = false
-        if(req.files !== null) {
-            const {image} = req.files
-            const fileName = uuid.v4() + ".jpg"
-            isPhotoChange = true
-            image.mv(path.resolve(__dirname,'..','static',fileName))
-            data.image = "/img/"+fileName
-        }
-        console.log(data.image)
-        TestimonialsElems.findByIdAndUpdate(data._id,{
+        TestimonialsElems.findByIdAndUpdate(data._id, {
             date: data.date,
             image: data.image,
             text: data.text,
             name: data.name,
             position: data.position
-        },(err,data)=>{
+        }, (err, data) => {
             if (err) throw err;
-            if(isPhotoChange) {
-                try {
-                    fs.unlink(path.resolve(__dirname + "/../static/" + data.image.substring(5)), (err) => {
-                    })
-                } catch (e) {
-                    throw e
-                }
-            }
+            console.log(data);
         })
 
         res.send(data)
@@ -85,7 +81,10 @@ class Testimonials{
     deleteTestimonials(req, res) {
         const data = JSON.parse(req.body.data);
         try {
-            fs.unlink(path.resolve(__dirname+"/../static/" + data.image.substring(5)),(err)=>{})
+            const url = data.image.split('/').at(-1).replace(".jpg","").replace(".png","");
+            console.log(url);
+            cloudinary.uploader.destroy(url, {resource_type: "image"}).then(r => {
+                console.log(r);})
         } catch (err) {
             throw err
             return res.status(500).json("")

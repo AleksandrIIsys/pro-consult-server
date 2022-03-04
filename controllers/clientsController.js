@@ -28,7 +28,7 @@ class Clients{
             const clientsDB = new ClientsElems({
                 _id: new mongoose.Types.ObjectId(),
                 date: object.date,
-                image: fileName,
+                image: fileName.url,
             })
             res.send(clientsDB);
             clientsDB.save(function (err) {
