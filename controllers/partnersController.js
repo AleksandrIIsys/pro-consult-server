@@ -31,7 +31,7 @@ class Partners {
             const partnersDB = new PartnersElems({
                 _id: new mongoose.Types.ObjectId(),
                 date: object.date,
-                image: fileName,
+                image: fileName.url,
             })
             res.send(partnersDB);
             partnersDB.save(function (err) {
