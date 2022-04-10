@@ -8,7 +8,11 @@ const {v2: cloudinary} = require("cloudinary");
 class Partners {
     getAll(req, res) {
         PartnersElems.find({}, function (err, docs) {
-            return res.send(docs)
+            if(err){
+                throw err
+                return res.status(500).send([])
+            }
+            return res.status(200).send(docs)
         })
     }
 
@@ -31,11 +35,16 @@ class Partners {
             const partnersDB = new PartnersElems({
                 _id: new mongoose.Types.ObjectId(),
                 date: object.date,
+                name:object.name,
+                country:object.country,
+                description:object.description,
                 image: fileName.url,
             })
             res.send(partnersDB);
             partnersDB.save(function (err) {
-                if (err) return console.log(err)
+                if (err) {
+                    return console.log(err)
+                }
                 console.log("Сохранение объект", partnersDB)
             })
         }
@@ -67,6 +76,9 @@ class Partners {
         }
         PartnersElems.findByIdAndUpdate(data._id, {
             image: path.image,
+            name:data.name,
+            country:data.country,
+            description:data.description,
             date: data.date
         }, (err, data) => {
             if (err) throw err;

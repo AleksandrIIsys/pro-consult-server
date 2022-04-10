@@ -7,6 +7,7 @@ const {v2: cloudinary} = require("cloudinary");
 class Clients{
     getAll(req,res){
         ClientsElems.find({},function (err,docs){
+            if(err) throw err;
             return res.send(docs)
         })
     }
@@ -27,13 +28,17 @@ class Clients{
         if(fileName.message !== 'Fail') {
             const clientsDB = new ClientsElems({
                 _id: new mongoose.Types.ObjectId(),
+                name:object.name,
+                country:object.country,
+                description:object.description,
                 date: object.date,
                 image: fileName.url,
             })
             res.send(clientsDB);
             clientsDB.save(function (err) {
-                if (err) return console.log(err)
+                if (err) throw err
                 console.log("Сохранение объект", clientsDB)
+                req.status(200);
             })
         }else {
             req.status(500).send("fail");
@@ -63,14 +68,19 @@ class Clients{
                     fs.unlinkSync(path);
                 });
         }
-        NewsElems.findByIdAndUpdate(data._id, {
+        ClientsElems    .findByIdAndUpdate(data._id, {
             image: fileName,
+            name:data.name,
+            country:data.country,
+            description:data.description,
             date: data.date
         }, (err, data) => {
-            if (err) throw err;
+            if (err) {
+                res.status(500)
+                throw err;
+            }
             console.log(data);
             res.send(data)
-
         })
         return res.status(200)
     }
