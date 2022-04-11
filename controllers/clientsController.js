@@ -7,7 +7,7 @@ const {v2: cloudinary} = require("cloudinary");
 class Clients{
     getAll(req,res){
         ClientsElems.find({},function (err,docs){
-            if(err) throw err;
+            if(err) console.log(err);
             return res.send(docs)
         })
     }
@@ -36,7 +36,7 @@ class Clients{
             })
             res.send(clientsDB);
             clientsDB.save(function (err) {
-                if (err) throw err
+                if (err) console.log(err);
                 console.log("Сохранение объект", clientsDB)
                 req.status(200);
             })

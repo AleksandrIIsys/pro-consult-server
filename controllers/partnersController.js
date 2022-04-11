@@ -9,7 +9,7 @@ class Partners {
     getAll(req, res) {
         PartnersElems.find({}, function (err, docs) {
             if(err){
-                throw err
+                console.log( err)
                 return res.status(500).send([])
             }
             return res.status(200).send(docs)
@@ -81,7 +81,7 @@ class Partners {
             description:data.description,
             date: data.date
         }, (err, data) => {
-            if (err) throw err;
+            if (err) console.log( err);
             console.log(data);
             res.send(data)
 
@@ -104,7 +104,7 @@ class Partners {
         try {
             PartnersElems.remove({"_id": data._id}, (err) => {
                 if (err)
-                    throw err
+                    console.log(err)
                 console.log("Suc");
             })
         } catch (err) {
