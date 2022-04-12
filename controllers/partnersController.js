@@ -58,7 +58,6 @@ class Partners {
             fileName = await cloudinary.uploader.upload(path, {resource_type: "image"}).then((result) => {
                 try {
                     const url = data.image.split('/').at(-1).replace(".jpg", "").replace(".png", "");
-                    console.log(url);
                     cloudinary.uploader.destroy(url, {resource_type: "image"}).then(r => {
                         console.log("Delete");
                     }).catch((err) => {
@@ -67,27 +66,26 @@ class Partners {
                 } catch (err) {
                     throw err;
                 }
-                fs.unlinkSync(path);
                 return result.url
             })
                 .catch((error) => {
-                    fs.unlinkSync(path);
+                    console.error(error)
                 });
+            fs.unlinkSync(path);
         }
         PartnersElems.findByIdAndUpdate(data._id, {
-            image: path.image,
+            image: fileName,
             name:data.name,
             country:data.country,
             description:data.description,
             date: data.date
         }, (err, data) => {
-            if (err) console.log( err);
-            console.log(data);
-            res.send(data)
+            if (err) console.log(err);
+            console.log("object was changed");
+            return res.status(200).send(data)
 
         })
 
-        return res.status(200)
     }
 
     deletePartners(req, res) {

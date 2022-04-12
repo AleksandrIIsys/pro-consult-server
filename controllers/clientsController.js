@@ -38,10 +38,10 @@ class Clients{
             clientsDB.save(function (err) {
                 if (err) console.log(err);
                 console.log("Сохранение объект", clientsDB)
-                req.status(200);
+                res.status(200);
             })
         }else {
-            req.status(500).send("fail");
+            res.status(500).send("fail");
         }
     }
     async editClients(req, res) {
@@ -61,13 +61,14 @@ class Clients{
                 } catch (err) {
                     throw err;
                 }
-                fs.unlinkSync(path);
                 return result.url
             })
                 .catch((error) => {
-                    fs.unlinkSync(path);
+                    console.error(error)
                 });
+            fs.unlinkSync(path);
         }
+
         ClientsElems    .findByIdAndUpdate(data._id, {
             image: fileName,
             name:data.name,
@@ -79,10 +80,10 @@ class Clients{
                 res.status(500)
                 throw err;
             }
-            console.log(data);
-            res.send(data)
+            console.log("object was changed");
+            return res.status(200).send(data)
+
         })
-        return res.status(200)
     }
     deleteClitents(req, res) {
         const data = JSON.parse(req.body.data);

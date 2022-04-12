@@ -49,7 +49,6 @@ class News {
         const data = JSON.parse(req.body.data)
         let fileName = data.image
         if (req.file !== undefined) {
-            console.log("image news was changed")
             const path = req.file.path
             fileName = await cloudinary.uploader.upload(path, {resource_type: "image"}).then((result) => {
                 try {
@@ -72,16 +71,16 @@ class News {
         }
         NewsElems.findByIdAndUpdate(data._id, {
             date: data.date,
-            image: fileName.url,
+            image: fileName,
             text: data.text,
             title: data.title
         }, (err, data) => {
             if (err) throw err;
             console.log("object was changed");
+            res.status(200).send("succ")
         })
         console.log("new object :")
         console.log(data)
-        return res.status(200)
     }
 
     deleteNews(req, res) {

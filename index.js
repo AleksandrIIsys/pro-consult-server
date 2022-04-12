@@ -35,7 +35,16 @@ app.get('/',(req,res)=>{
     res.send("WORKED")
 })
 async function start(){
-    await mongoose.connect(DB_CONN)
-    app.listen(PORT,()=>console.log("hihih"))
+    setTimeout(async function mongoDB(){
+        try {
+            await mongoose.connect(DB_CONN)
+            console.log("DB connected")
+        }catch (e) {
+            setTimeout(mongoDB,5000)
+            console.error(e)
+        }
+    },500)
+    console.log(4);
+    app.listen(PORT,()=>console.log("server started"))
 }
 start()

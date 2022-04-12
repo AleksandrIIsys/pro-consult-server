@@ -14,14 +14,12 @@ class Testimonials{
         const object = JSON.parse(req.body.data);
         const path = req.file.path;
         let fileName = await cloudinary.uploader.upload(path,{resource_type: "image"}).then((result) => {
-            fs.unlinkSync(path);
             return {
                 message: "Success",
                 url: result.url,
             };
         })
             .catch((error) => {
-                fs.unlinkSync(path);
                 return { message: "Fail" };
             });
         if(fileName.message !== 'Fail'){
@@ -33,12 +31,13 @@ class Testimonials{
             name: object.name,
             position: object.position
         })
-        res.send(testimonialsDB);
         testimonialsDB.save(function (err) {
             if (err) return console.log(err)
             console.log("Сохранение объект", testimonialsDB)
+            res.status(200).send("succ")
         })
         }
+        console.log("end")
     }
     async editTestimonials(req, res) {
         const data = JSON.parse(req.body.data)
@@ -57,26 +56,25 @@ class Testimonials{
                 } catch (err) {
                     throw err;
                 }
-                fs.unlinkSync(path);
                 return result.url
-            })
-                .catch((error) => {
-                    fs.unlinkSync(path);
+            }).catch((error) => {
+                console.error(error)
                 });
+            fs.unlinkSync(path);
         }
         TestimonialsElems.findByIdAndUpdate(data._id, {
             date: data.date,
-            image: data.image,
+            image: fileName,
             text: data.text,
             name: data.name,
             position: data.position
         }, (err, data) => {
             if (err) throw err;
             console.log(data);
+            console.log("update")
+            return res.status(200).send("succ")
         })
 
-        res.send(data)
-        return res.status(200)
     }
     deleteTestimonials(req, res) {
         const data = JSON.parse(req.body.data);
