@@ -1,45 +1,55 @@
 const path = require('path')
-const {TestimonialsElems, NewsElems} = require("../models/models");
-const mongoose = require("mongoose");
+const {PartnersElems, NewsElems, ClientsElems, SlideElement} = require("../models/models");
 const uuid = require("uuid");
+const mongoose = require("mongoose");
 const fs = require("fs");
 const {v2: cloudinary} = require("cloudinary");
-class Testimonials{
-    getAll(req,res){
-        TestimonialsElems.find({},function (err,docs){
-            return res.send(docs)
+
+class Slider {
+    getAll(req, res) {
+        SlideElement.find({}, function (err, docs) {
+            if(err){
+                console.log(err)
+                return res.status(500).send([])
+            }
+            return res.status(200).send(docs)
         })
     }
-    async addTestimonials(req, res) {
+
+    async addSlide(req, res) {
         const object = JSON.parse(req.body.data);
-        const path = req.files["picture"][0].path;
-        let fileName = await cloudinary.uploader.upload(path,{resource_type: "image"}).then((result) => {
+        let path = req.files["picture"][0].path;
+        let fileName = await cloudinary.uploader.upload(path, {resource_type: "image"}).then((result) => {
+            fs.unlinkSync(path);
             return {
                 message: "Success",
                 url: result.url,
             };
         })
             .catch((error) => {
-                return { message: "Fail" };
+                fs.unlinkSync(path);
+                return {message: "Fail"};
             });
-        if(fileName.message !== 'Fail'){
-        const testimonialsDB = new TestimonialsElems({
-            _id: new mongoose.Types.ObjectId(),
-            date: object.date,
-            image: fileName.url,
-            text: object.text,
-            name: object.name,
-            position: object.position
-        })
-        testimonialsDB.save(function (err) {
-            if (err) return console.log(err)
-            console.log("Сохранение объект", testimonialsDB)
-            res.status(200).send("succ")
-        })
+        if (fileName.message !== 'Fail') {
+
+            const slideDB = new SlideElement({
+                _id: new mongoose.Types.ObjectId(),
+                url: object.url,
+                title:object.title,
+                subtitle:object.subtitle,
+                image: fileName.url,
+            })
+            res.send(slideDB);
+            slideDB.save(function (err) {
+                if (err) {
+                    return console.log(err)
+                }
+                console.log("Сохранение объект", slideDB)
+            })
         }
-        console.log("end")
     }
-    async editTestimonials(req, res) {
+
+    async editSlide(req, res) {
         const data = JSON.parse(req.body.data)
         let fileName = data.image
         if (req.files["picture"][0] !== undefined) {
@@ -47,7 +57,6 @@ class Testimonials{
             fileName = await cloudinary.uploader.upload(path, {resource_type: "image"}).then((result) => {
                 try {
                     const url = data.image.split('/').at(-1).replace(".jpg", "").replace(".png", "");
-                    console.log(url);
                     cloudinary.uploader.destroy(url, {resource_type: "image"}).then(r => {
                         console.log("Delete");
                     }).catch((err) => {
@@ -57,26 +66,27 @@ class Testimonials{
                     throw err;
                 }
                 return result.url
-            }).catch((error) => {
-                console.error(error)
+            })
+                .catch((error) => {
+                    console.error(error)
                 });
             fs.unlinkSync(path);
         }
-        TestimonialsElems.findByIdAndUpdate(data._id, {
-            date: data.date,
+        SlideElement.findByIdAndUpdate(data._id, {
             image: fileName,
-            text: data.text,
-            name: data.name,
-            position: data.position
+            title:data.title,
+            subtitle:data.subtitle,
+            url: data.url
         }, (err, data) => {
-            if (err) throw err;
-            console.log(data);
-            console.log("update")
-            return res.status(200).send("succ")
+            if (err) console.log(err);
+            console.log("object was changed");
+            return res.status(200).send(data)
+
         })
 
     }
-    deleteTestimonials(req, res) {
+
+    deleteSlide(req, res) {
         const data = JSON.parse(req.body.data);
         try {
             const url = data.image.split('/').at(-1).replace(".jpg","").replace(".png","");
@@ -88,12 +98,12 @@ class Testimonials{
             return res.status(500).json("")
         }
         try {
-            TestimonialsElems.remove({"_id": data._id},(err)=>{
-                if(err)
-                    throw err
+            PartnersElems.remove({"_id": data._id}, (err) => {
+                if (err)
+                    console.log(err)
                 console.log("Suc");
             })
-        }catch (err){
+        } catch (err) {
             throw err
             return res.status(500).json("")
         }
@@ -102,4 +112,4 @@ class Testimonials{
     }
 }
 
-module.exports = new Testimonials();
+module.exports = new Slider();

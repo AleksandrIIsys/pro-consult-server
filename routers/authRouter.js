@@ -17,7 +17,7 @@ router.post('/', (req, res) => {
 )
 router.post('/key', (req, res) => {
         const {checkedkey} = req.body
-        console.log(key);
+    console.log(key);
         console.log(checkedkey);
         res.send({result: String(checkedkey) === String(key)});
     }

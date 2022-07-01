@@ -18,7 +18,7 @@ class Partners {
 
     async addPartners(req, res) {
         const object = JSON.parse(req.body.data);
-        let path = req.file.path;
+        let path = req.files["picture"][0].path;
         let fileName = await cloudinary.uploader.upload(path, {resource_type: "image"}).then((result) => {
             fs.unlinkSync(path);
             return {
@@ -53,8 +53,8 @@ class Partners {
     async editPartners(req, res) {
         const data = JSON.parse(req.body.data)
         let fileName = data.image
-        if (req.file !== undefined) {
-            const path = req.file.path
+        if (req.files["picture"][0] !== undefined) {
+            const path = req.files["picture"][0].path
             fileName = await cloudinary.uploader.upload(path, {resource_type: "image"}).then((result) => {
                 try {
                     const url = data.image.split('/').at(-1).replace(".jpg", "").replace(".png", "");
